@@ -1,0 +1,52 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/27.0.5 Chrome/134.0.6998.205 Electron/35.4.0 Safari/537.36" version="27.0.5">
+  <diagram name="Page-1" id="MHwJ5e3d81-eklCB4ar7">
+    <mxGraphModel dx="829" dy="1035" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="qYlGZWn4w9u_oPGeYLAw-1" value="" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;fillColor=#505050;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;outlineConnect=0;align=center;shape=mxgraph.office.concepts.documents;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="240" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="qYlGZWn4w9u_oPGeYLAw-2" value="" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;fillColor=#505050;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;outlineConnect=0;align=center;shape=mxgraph.office.concepts.document;" vertex="1" parent="1">
+          <mxGeometry x="810" y="245" width="50" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="qYlGZWn4w9u_oPGeYLAw-3" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;strokeWidth=3;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="190" y="280" as="sourcePoint" />
+            <mxPoint x="240" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qYlGZWn4w9u_oPGeYLAw-4" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;- Удаление шума&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;- Исправление наклона&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;- Бинаризация&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="250" y="240" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="qYlGZWn4w9u_oPGeYLAw-5" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;- Анализ на пиксельном уровне&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;- Анализ связных компонент&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;- Анализ локальной области&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;- Гибридный&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="500" y="240" width="240" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="qYlGZWn4w9u_oPGeYLAw-6" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;strokeWidth=3;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="279.5" as="sourcePoint" />
+            <mxPoint x="490" y="279.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qYlGZWn4w9u_oPGeYLAw-7" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;strokeWidth=3;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="750" y="279.5" as="sourcePoint" />
+            <mxPoint x="800" y="279.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qYlGZWn4w9u_oPGeYLAw-8" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;Предобработка&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="260" y="200" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qYlGZWn4w9u_oPGeYLAw-9" value="&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;Анализ макета&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="545" y="200" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qYlGZWn4w9u_oPGeYLAw-10" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;Изображение документа&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="30" y="320" width="240" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qYlGZWn4w9u_oPGeYLAw-11" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;Разметка&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="785" y="320" width="100" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
