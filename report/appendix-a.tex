@@ -168,7 +168,7 @@ def classify_line(feat: LineFeatures):
     return State.UNDEFINED
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Функция для создания первичной или уточненной разметки}, label={lsf:sd}]
+\begin{lstlisting}[caption={Функция для создания первичной или уточненной разметки}, label={lst:sd}]
 def segment_document(
     image: np.ndarray,
     line_feature_func: Callable[[np.ndarray], LineFeatures],
