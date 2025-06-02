@@ -11,6 +11,15 @@
 
 \subsection{Выбор средств реализации}
 
+python
+uv
+numpy
+gradio
+PIL
+fitz
+
+neovim
+
 % Обосновать выбор программных средств реализации предложенного метода
 
 \subsection{Реализация программного обеспечения}
@@ -20,12 +29,168 @@
 \subsection{Результаты тестирования}
 
 % Реализовать предложенный метод
+После разработки программного обеспечения было проведено тестирование модуля разметки.
+Тестирование проводилось в соответствии с описанными в конструкторском разделе классами эквивалентности.
+При тестировании уточненной разметки классы эквивалентности были объединены в более крупные --- на основе получаемого класса разметки на выходе.
+Результаты тестирования представлены в листинге \ref{lst:test} ниже.
+
+\begin{lstlisting}[caption={Результаты тестирования}, label={lst:test}]
+======== short test summary info ================
+PASSED test.py::TestPrimaryMarkup::test_background
+PASSED test.py::TestPrimaryMarkup::test_few_text
+PASSED test.py::TestPrimaryMarkup::test_undefined
+PASSED test.py::TestPrimaryMarkup::test_many_text
+PASSED test.py::TestPrimaryMarkup::test_long_black_line
+PASSED test.py::TestPrimaryMarkup::test_medium_black_line
+PASSED test.py::TestPrimaryMarkup::test_color
+PASSED test.py::TestSpecifiedMarkup::test_to_text
+PASSED test.py::TestSpecifiedMarkup::test_to_table
+PASSED test.py::TestSpecifiedMarkup::test_to_code
+PASSED test.py::TestSpecifiedMarkup::test_to_diagram
+PASSED test.py::TestSpecifiedMarkup::test_to_figure
+PASSED test.py::TestSpecifiedMarkup::test_to_plot
+PASSED test.py::TestSpecifiedMarkup::test_to_undefined
+PASSED test.py::TestMergedMarkup::test_merge_little_bg
+PASSED test.py::TestMergedMarkup::test_merge_bg_interpolate
+PASSED test.py::TestMergedMarkup::test_swap_bg_to_undefined
+PASSED test.py::TestMergedMarkup::test_merge_undefined
+PASSED test.py::TestMergedMarkup::test_merge_segments
+\end{lstlisting}
+
+\newpage
 
 \subsection{Пользовательский интерфейс}
 
 % Описать взаимодействие пользователя с программным обеспечением
 
+На рисунках \ref{fig:webstart} -- \ref{fig:webdone} ниже представлен порядок взаимодействия пользователя с графическим веб-интерфейсом.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{img/web-start.png}
+    \caption{Выбор типа разметки}
+	\label{fig:webstart}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{img/web-process.png}
+    \caption{Разметка в процессе}
+	\label{fig:webproc}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{img/web-done.png}
+    \caption{Разметка завершена --- пользователь может скачать разметку в формате JSON и/или PDF документ для ее визуализации}
+	\label{fig:webdone}
+\end{figure}
+
+\newpage
+
+\subsection{Демонстрация работы программы}
+
+На рисунках \ref{fig:line} -- \ref{fig:merged} ниже приведена демонстрация работы программы.
+Представлены результаты построчной (строке пикселей назначется класс на основе распределения пикселей в ней, без использования конечного автомата), первичной, уточненной и объединенной разметок.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{img/m.line.png}
+    \caption{Пример построчной разметки}
+	\label{fig:line}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{img/m.prim.png}
+    \caption{Пример первичной разметки}
+	\label{fig:prim}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{img/m.spec.png}
+    \caption{Пример уточненной разметки}
+	\label{fig:spec}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{img/m.merged.png}
+    \caption{Пример объединенной разметки}
+	\label{fig:merged}
+\end{figure}
+
+\newpage
+
+В листингах \ref{lst:main} и \ref{lst:apply} ниже представлен результат работы программы при запуске из терминала.
+
+Для запуска программы требуется установить uv командой:
+\begin{lstlisting}[caption={Запуск и результат работы разметки из терминала}, label={lst:main}]
+uv run main.py ~/index.pdf x.json 3
+Pages processed: 31/31 [00:06<00:00,  5.11it/s]
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Запуск и результат применения разметки к PDF из терминала}, label={lst:apply}]
+uv run apply.py ~/index.pdf x.json output.pdf
+Annotating pages: 31/31 [00:00<00:00, 383.41it/s]
+Сохранено в: output.pdf
+\end{lstlisting}
+
 \subsection{Руководство пользователя}
+
+Для запуска программы требуется установить uv командой:
+\begin{lstlisting}[caption={Установка uv}]
+curl -LsSf https://astral.sh/uv/install.sh | sh
+\end{lstlisting}
+
+После установки uv, следует установить зависимости приложения.
+Для этого, находясь в директории с программой, следует прописать команду:
+\begin{lstlisting}[caption={Установка зависимостей}]
+uv sync
+\end{lstlisting}
+
+Графический интерфейс запускается локально командой:
+\begin{lstlisting}[caption={Запуск графического веб-интерфейса}]
+uv run webgui.py
+\end{lstlisting}
+
+Также можно создать разметку без использования графического интерфейса.
+Для этого используется скрипт main.py:
+\begin{lstlisting}[caption={Запуск скрипта для создания разметки}]
+Использование: main.py [-w КОЛИЧЕСТВО_ПРОЦЕССОВ]
+                       [-p СТРАНИЦЫ]
+                       pdf_path json_path {0,1,2,3}
+
+Сегментировать PDF страницы и экспортировать разметку в JSON.
+
+Позиционные аргументы:
+  pdf_path              Путь ко входному PDF файлу
+  json_path             Путь к выходному JSON файлу
+  {0,1,2,3}             Тип разметки: 0 - построчная разметка,
+                                      1 - первичная разметка,
+                                      2 - уточненная разметка,
+                                      3 - объединенная разметка
+
+Опции:
+  -w, --workers КОЛИЧЕСТВО_ПРОЦЕССОВ
+                        Количество рабочих процессов
+                        (по умолчанию: 8)
+  -p, --pages СТРАНИЦЫ  Диапазоны страниц для обработки,
+                        например, '1-3,5,7-9'
+\end{lstlisting}
+
+Для применения разметки к документу без графического интерфейса используется скрипт apply.py:
+\begin{lstlisting}[caption={Запуск скрипта для применения разметки к PDF документу}]
+Использование: apply.py [-h] pdf_path json_path output_path
+
+Разметить PDF цветными сегментами из JSON файла разметки.
+
+Позиционные аргументы:
+  pdf_path     Путь ко входному PDF файлу
+  json_path    Путь к JSON файлу с разметкой
+  output_path  Путь для сохранения размеченного PDF
+\end{lstlisting}
 
 \subsection*{Вывод}
 
