@@ -4,7 +4,7 @@
 
 % \includepdf[pages={1-7},angle=90,scale=0.8,pagecommand={\thispagestyle{plain}}]{presentation.pdf}
 
-\begin{lstlisting}[caption={Функция для выделения характеристик строки пикселей}, label={lst:elf}]
+\begin{lstlisting}[caption={Функция для выделения характеристик строки пикселей (часть 1)}, label={lst:elf}]
 def extract_line_features(
     scanline: np.ndarray,
     left_margin: int = 0,
@@ -35,11 +35,14 @@ def extract_line_features(
         run_starts = np.where(diffs == 1)[0]
         run_ends = np.where(diffs == -1)[0]
         return (run_ends - run_starts).tolist()
+\end{lstlisting}
 
+\newpage
+
+\begin{lstlisting}[caption={Функция для выделения характеристик строки пикселей (часть 2)}, label={lst:}]
     comp_lengths = rle_lengths(mask_nonwhite)
     gray_comp_lengths = rle_lengths(mask_gray)
     color_comp_lengths = rle_lengths(mask_color)
-
     # gap_lengths: разности между концами и началом следующих компонент
     padded_nonwhite = np.pad(mask_nonwhite.astype(np.uint8), (1, 1))
     diffs = np.diff(padded_nonwhite)
@@ -73,7 +76,9 @@ def extract_line_features(
     )
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Функция классификации строки}, label={lst:classify_line}]
+\newpage
+
+\begin{lstlisting}[caption={Функция классификации строки (часть 1)}, label={lst:classify_line}]
 def classify_line(feat: LineFeatures):
     cond_background = (
         feat.first_nonwhite_index is None
@@ -111,6 +116,9 @@ def classify_line(feat: LineFeatures):
     n = MIN_NUMBER_OF_COMPONENTS_TO_BE_CONSIDERED_A_LOT
     has_a_fucking_lot_of_comps = (
         len(feat.comp_lengths) > MIN_NUMBER_OF_COMPONENTS_TO_BE_CONSIDERED_A_FUCKNIG_LOT
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Функция классификации строки (часть 2)}, label={lst:}]
     )
     has_a_lot_of_comps_and_no_color = (
         len(feat.comp_lengths) > n and
@@ -149,6 +157,9 @@ def classify_line(feat: LineFeatures):
     has_huge_gaps = any(abs(z) > HUGE_GAP_ZSCORE for z in z_scores)
     has_a_few_comps = (
         len(feat.comp_lengths) <= n
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Функция классификации строки (часть 3)}, label={lst:}]
     )
     comps_are_mostly_small = (
         mean_comp < MAX_COMPONENT_LENGTH_TO_BE_CONSIDERED_SMALL
@@ -168,7 +179,7 @@ def classify_line(feat: LineFeatures):
     return State.UNDEFINED
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Функция для создания первичной или уточненной разметки}, label={lst:sd}]
+\begin{lstlisting}[caption={Функция для создания первичной или уточненной разметки (часть 1)}, label={lst:sd}]
 def segment_document(
     image: np.ndarray,
     line_feature_func: Callable[[np.ndarray], LineFeatures],
@@ -187,6 +198,11 @@ def segment_document(
         sd.count_single_medium_black_line = 0
         sd.count_long_black_line = 0
         sd.count_medium_black_line = 0
+\end{lstlisting}
+
+\newpage
+
+\begin{lstlisting}[caption={Функция для создания первичной или уточненной разметки (часть 2)}, label={lst:}]
         sd.count_total_medium_black_line = 0
         sd.count_many_text = 0
         sd.count_color = 0
@@ -220,14 +236,12 @@ def segment_document(
         prev_state = state
         prev_feat = feat
     class_name = classify_segment(prev_state, sd, raw)
-
     result = (sd.start, sd.end, class_name)
     results.append(result)
-
     return results
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Конечный автомат}, label={lst:fsm}]
+\begin{lstlisting}[caption={Конечный автомат (часть 1)}, label={lst:fsm}]
 FSM = {
     State.BACKGROUND: {
         State.UNDEFINED:         State.UNDEFINED,
@@ -265,6 +279,11 @@ FSM = {
         State.COLOR:             State.COLOR,
         State.BACKGROUND:        State.BACKGROUND,
     },
+\end{lstlisting}
+
+\newpage
+
+\begin{lstlisting}[caption={Конечный автомат (часть 2)}, label={lst:}]
     State.LONG_BLACK_LINE: {
         State.UNDEFINED:         State.LONG_BLACK_LINE,
         State.MANY_TEXT:         State.LONG_BLACK_LINE,
@@ -306,7 +325,9 @@ class State:
     LONG_BLACK_LINE   = 6
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Функция handle\_undefined}, label={lst:hundef}]
+\newpage
+
+\begin{lstlisting}[caption={Функция handle\_undefined (часть 1)}, label={lst:hundef}]
 def handle_undefined(sd: SegmentData):
     def text(sd: SegmentData):
         height = sd.end - sd.start
@@ -341,7 +362,11 @@ def handle_undefined(sd: SegmentData):
         n_vertical_black_lines = len(np.where(diff == 1)[0])
 
         return n_vertical_black_lines == 1
+\end{lstlisting}
 
+\newpage
+
+\begin{lstlisting}[caption={Функция handle\_undefined (часть 2)}, label={lst:}]
     if text(sd):
         return ClassNames[Class.TEXT]
 
@@ -367,7 +392,7 @@ def handle_few_text(_: SegmentData):
     return ClassNames[Class.TEXT]
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Функция handle\_many\_text}, label={lst:}]
+\begin{lstlisting}[caption={Функция handle\_many\_text (часть 1)}, label={lst:}]
 def handle_many_text(sd: SegmentData):
     def table(sd: SegmentData):
         height = sd.end - sd.start
@@ -378,12 +403,15 @@ def handle_many_text(sd: SegmentData):
         lbl_start_indices = np.where(diff == 1)[0]
         n_vertical_black_lines = len(lbl_start_indices)
         has_more_than_two_vertical_lines = n_vertical_black_lines > 2
-
         min_space_is_reasonably_small = True
+\end{lstlisting}
+
+\newpage
+
+\begin{lstlisting}[caption={Функция handle\_many\_text (часть 2)}, label={lst:}]
         if has_more_than_two_vertical_lines:
             min_space_is_reasonably_small = min(np.diff(lbl_start_indices)) >
           MIN_REASONABLY_SMALL_SPACE_BETWEEN_TWO_COLUMNS_IN_TABLE
-
 
         pretty_high = height > MIN_SEGMENT_HEIGHT_TO_BE_CONSIDERED_HIGH
 
@@ -417,7 +445,9 @@ def handle_many_text(sd: SegmentData):
                 has_no_color
             )
         )
+\end{lstlisting}
 
+\begin{lstlisting}[caption={Функция handle\_many\_text (часть 3)}, label={lst:}]
     if table(sd):
         return ClassNames[Class.TABLE]
 
@@ -431,12 +461,10 @@ def handle_many_text(sd: SegmentData):
 def handle_color(sd: SegmentData):
     def plot(sd: SegmentData):
         height = sd.end - sd.start
-
         high_vbls = sd.heatmap_black >= PLOT_VERTICAL_LINE_HEIGHT_CORRECTION * height
         padded = np.concatenate(([False], high_vbls, [False]))
         diff = np.diff(padded.astype(int))
         n_vertical_black_lines = len(np.where(diff == 1)[0])
-
         has_single_vertical_axis = n_vertical_black_lines == 1
         has_pretty_small_color_to_white_relation = (sd.count_color_px /
             sd.count_white_px) < MIN_COLOR_TO_WHITE_RATIO_TO_BE_CONSIDERED_SMALL
@@ -459,7 +487,7 @@ def handle_color(sd: SegmentData):
     return ClassNames[Class.FIGURE]
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Функция handle\_medium\_black\_line}, label={lst:}]
+\begin{lstlisting}[caption={Функция handle\_medium\_black\_line (часть 1)}, label={lst:}]
 def handle_medium_black_line(sd: SegmentData):
     def text(sd: SegmentData):
         height = sd.end - sd.start
@@ -491,7 +519,11 @@ def handle_medium_black_line(sd: SegmentData):
                 has_a_lot_of_mbls
             )
         )
+\end{lstlisting}
 
+\newpage
+
+\begin{lstlisting}[caption={Функция handle\_medium\_black\_line (часть 2)}, label={lst:}]
     def plot(sd: SegmentData):
         height = sd.end - sd.start
         has_color = sd.count_color > 0
@@ -524,7 +556,11 @@ def handle_medium_black_line(sd: SegmentData):
             ) or
             has_single_mbl
         )
+\end{lstlisting}
 
+\newpage
+
+\begin{lstlisting}[caption={Функция handle\_medium\_black\_line (часть 3)}, label={lst:}]
     def diagram(sd: SegmentData):
         return sd.count_single_medium_black_line > 1
 
@@ -554,7 +590,9 @@ def handle_medium_black_line(sd: SegmentData):
     return ClassNames[Class.DIAGRAM]
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Функция handle\_long\_black\_line}, label={lst:hlbl}]
+\newpage
+
+\begin{lstlisting}[caption={Функция handle\_long\_black\_line (часть 1)}, label={lst:hlbl}]
 def handle_long_black_line(sd: SegmentData):
     def table(sd: SegmentData):
         height = sd.end - sd.start
@@ -588,7 +626,11 @@ def handle_long_black_line(sd: SegmentData):
         has_no_mbls = sd.count_single_medium_black_line == 0
         had_many_text = sd.count_many_text > 0
         has_no_color = sd.count_color == 0
+\end{lstlisting}
 
+\newpage
+
+\begin{lstlisting}[caption={Функция handle\_long\_black\_line (часть 2)}, label={lst:}]
         return (
             has_two_vertical_lines and
             has_no_mbls and
@@ -626,7 +668,11 @@ def handle_long_black_line(sd: SegmentData):
         height = sd.end - sd.start
         smol = height < MAX_SEGMENT_HEIGHT_TO_BE_CONSIDERED_SMALL
         return smol
+\end{lstlisting}
 
+\newpage
+
+\begin{lstlisting}[caption={Функция handle\_long\_black\_line (часть 3)}, label={lst:}]
     if undefined(sd):
         return ClassNames[Class.UNDEFINED]
 
@@ -645,13 +691,13 @@ def handle_long_black_line(sd: SegmentData):
     return ClassNames[Class.FIGURE]
 \end{lstlisting}
 
+\newpage
+
 \begin{lstlisting}[caption={Функция обновления информации о сегменте}, label={lst:usd}]
 def update_segment_data(sd: SegmentData, prev_feat, feat: LineFeatures, line: np.ndarray):
     prev_state = classify_line(prev_feat)
     state = classify_line(feat)
-
     sd.end += 1
-
     if prev_state != state and state == State.LONG_BLACK_LINE:
         sd.count_single_long_black_line += 1
     elif state == State.LONG_BLACK_LINE:
@@ -670,25 +716,21 @@ def update_segment_data(sd: SegmentData, prev_feat, feat: LineFeatures, line: np
         sd.count_undefined += 1
     elif state == State.BACKGROUND:
         return
-
     sd.count_white_px += feat.count_white
     sd.count_color_px += feat.count_color
     sd.count_gray_px += feat.count_gray
 
     min_medium_black_line_length = get_min_medium_black_line_length(feat)
-
     # NOTE: Account for several MBLs on single line
     count_total_medium_black_lines = sum(np.array(feat.gray_comp_lengths) >
-                                   min_medium_black_line_length)
+
     sd.count_total_medium_black_line += count_total_medium_black_lines
-
     (_, _, mask_color, mask_gray) = get_masks(line, WHITE_THRESH, GRAY_TOL)
-
     sd.heatmap_black += mask_gray.astype(int)
     sd.heatmap_color += mask_color.astype(int)
 \end{lstlisting}
 
-\begin{lstlisting}[caption={Функция создания объединенной разметки}, label={lst:merged}]
+\begin{lstlisting}[caption={Функция создания объединенной разметки (часть 1)}, label={lst:merged}]
 def merge(markup: List[Tuple[int, int, str]]):
     tmp_markup = [markup[0]]
     new_markup = [markup[0]]
@@ -727,7 +769,11 @@ def merge(markup: List[Tuple[int, int, str]]):
         (prev_start, prev_end, prev_class) = new_markup[i-1]
         (curr_start, curr_end, curr_class) = new_markup[i]
         (next_start, next_end, next_class) = new_markup[i+1]
+\end{lstlisting}
 
+\newpage
+
+\begin{lstlisting}[caption={Функция создания объединенной разметки (часть 2)}, label={lst:}]
         prev_height = prev_end - prev_start
         curr_height = curr_end - curr_start
         next_height = next_end - next_start
@@ -766,7 +812,11 @@ def merge(markup: List[Tuple[int, int, str]]):
         (prev_start, prev_end, prev_class) = new_markup[i-1]
         (curr_start, curr_end, curr_class) = new_markup[i]
         (next_start, next_end, next_class) = new_markup[i+1]
+\end{lstlisting}
 
+\newpage
+
+\begin{lstlisting}[caption={Функция создания объединенной разметки (часть 3)}, label={lst:}]
         prev_height = prev_end - prev_start
         curr_height = curr_end - curr_start
         next_height = next_end - next_start
