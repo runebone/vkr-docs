@@ -114,8 +114,8 @@ def classify_line(feat: LineFeatures):
         return State.MEDIUM_BLACK_LINE
 
     n = MIN_NUMBER_OF_COMPONENTS_TO_BE_CONSIDERED_A_LOT
-    has_a_fucking_lot_of_comps = (
-        len(feat.comp_lengths) > MIN_NUMBER_OF_COMPONENTS_TO_BE_CONSIDERED_A_FUCKNIG_LOT
+    has_a_f_lot_of_comps = (
+        len(feat.comp_lengths) > MIN_NUMBER_OF_COMPONENTS_TO_BE_CONSIDERED_A_F_LOT
 \end{lstlisting}
 
 \begin{lstlisting}[caption={Функция классификации строки (часть 2)}, label={lst:}]
@@ -125,7 +125,7 @@ def classify_line(feat: LineFeatures):
         feat.count_color == 0
     )
     cond_many_text = (
-        has_a_fucking_lot_of_comps or
+        has_a_f_lot_of_comps or
         has_a_lot_of_comps_and_no_color
     )
     if cond_many_text:
