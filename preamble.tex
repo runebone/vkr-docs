@@ -57,10 +57,18 @@
 \usepackage{indentfirst} % Красная строка
 
 % Настройки оглавления
-% \usepackage{xcolor}
-% \usepackage[table]{xcolor}
 \usepackage{multirow}
 \usepackage{longtable}
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\tableofcontents}{\@starttoc{toc}}{\vspace{-1cm}\@starttoc{toc}}{}{}
+\makeatother
+\usepackage{tocloft}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cfttoctitlefont}{\hfill\large\bfseries}
+\renewcommand{\cftaftertoctitle}{\hfill\hfill}
+\setlength\cftbeforetoctitleskip{-22pt}
+\setlength\cftaftertoctitleskip{15pt}
 
 % Гиперссылки
 \usepackage[pdftex]{hyperref}
