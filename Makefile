@@ -37,7 +37,21 @@ clean:
 	-cd report && rm $(SHIT) > /dev/null
 	rm -rf out
 
-pres: presentation.tex
+pres: speech.tex
+	make resurrect
+	-$(CC) $(FLAGS) $< #> /dev/null
+	-$(CC) $(FLAGS) $<  > /dev/null
+	-mv speech.pdf lkj.pdf
+	make moveout
+
+xel: speech.tex
+	make resurrect
+	-xelatex $(FLAGS) $< #> /dev/null
+	-xelatex $(FLAGS) $<  > /dev/null
+	-mv speech.pdf lkj.pdf
+	make moveout
+
+rez: rez.tex
 	make resurrect
 	-$(CC) $(FLAGS) $< #> /dev/null
 	-$(CC) $(FLAGS) $<  > /dev/null
