@@ -374,6 +374,32 @@ PASSED test.py::TestMergedMarkup::test_merge_undefined
 PASSED test.py::TestMergedMarkup::test_merge_segments
 \end{lstlisting}
 
+\newpage
+
+Также было проведено тестирование работы программы на произвольной выборке, состоящей из 28 документов, в результате которого были получены значения точности и полноты реализованного метода разметки, представленные в таблице \ref{tab:precrec} ниже.
+
+\begin{table}[H]
+    \centering
+    \caption{Полнота и точность реализованного метода разметки}
+    \label{tab:precrec}
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|c|}
+            \hline
+            \textbf{Класс \textbackslash\ Критерий} & \textbf{Верно} & \textbf{Л-Пол} & \textbf{Л-Нег} & \textbf{Точность} & \textbf{Полнота} \\ \hline
+            Фон & 73 & 0 & 0 & 1.00 & 1.00 \\ \hline
+            Текст & 490 & 15 & 1 & 0.97 & 0.99 \\ \hline
+            Схема & 92 & 17 & 41 & 0.84 & 0.69 \\ \hline
+            Рисунок & 50 & 54 & 21 & 0.48 & 0.83 \\ \hline
+            График & 37 & 10 & 9 & 0.79 & 0.80 \\ \hline
+            Таблица & 90 & 0 & 12 & 1.00 & 0.88 \\ \hline
+            Листинг & 80 & 4 & 18 & 0.95 & 0.82 \\ \hline
+            Не определено & 20 & 0 & 0 & 1.00 & 1.00 \\ \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
+\newpage
+
 \subsection{Пользовательский интерфейс}
 
 % Описать взаимодействие пользователя с программным обеспечением
